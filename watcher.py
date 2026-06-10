@@ -277,6 +277,118 @@ def send_discord(webhook, items, label):
         time.sleep(1)
 
 
+# ---------------------------------------------------------------- 디스코드 명령
+DISCORD_API = "https://discord.com/api/v10"
+
+# 채팅에서 쓰는 사이트 별칭 → (source, shop)
+SOURCE_ALIASES = {
+    "번개": ("bunjang", None), "번개장터": ("bunjang", None),
+    "중고나라": ("joongna", None), "중고": ("joongna", None),
+    "메루카리": ("japanq", "mercari"), "메루": ("japanq", "mercari"), "mercari": ("japanq", "mercari"),
+    "라쿠텐": ("japanq", "rakuten"), "rakuten": ("japanq", "rakuten"),
+    "야후쇼핑": ("japanq", "yhshop"),
+    "아마존재팬": ("japanq", "amazon_jp"), "아마존jp": ("japanq", "amazon_jp"),
+    "야후옥션": ("japanq", "yhauc"), "야옥": ("japanq", "yhauc"),
+    "아마존": ("amazon_us", None), "아마존us": ("amazon_us", None),
+    "이베이": ("ebay_us", None), "ebay": ("ebay_us", None),
+}
+HELP_TEXT = ("📖 명령어\n"
+             "`추가 <사이트> <키워드>`  예) `추가 번개 구찌 마몬트 지갑`\n"
+             "`삭제 <번호>`  (번호는 목록에서 확인)\n"
+             "`목록`  현재 감시 목록 보기\n"
+             "사이트: 번개 · 중고나라 · 메루카리 · 라쿠텐 · 야후쇼핑 · 아마존재팬 · 야후옥션 · 아마존 · 이베이")
+
+
+def reply(webhook, text):
+    try:
+        _post_json(webhook, {"content": text})
+    except Exception as e:
+        print("답장 실패:", e)
+
+
+def discord_get_messages(token, channel_id, after):
+    url = "%s/channels/%s/messages?limit=100" % (DISCORD_API, channel_id)
+    if after:
+        url += "&after=%s" % after
+    req = urllib.request.Request(url, headers={
+        "Authorization": "Bot %s" % token, "User-Agent": "shopping-watch"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.loads(_read(r))
+
+
+def handle_command(text, config, webhook):
+    parts = text.split()
+    if not parts:
+        return False
+    cmd = parts[0]
+    if cmd in ("추가", "add"):
+        if len(parts) < 3 or parts[1] not in SOURCE_ALIASES:
+            reply(webhook, "사용법: `추가 <사이트> <키워드>`\n" + HELP_TEXT)
+            return False
+        source, shop = SOURCE_ALIASES[parts[1]]
+        w = {"source": source, "keyword": " ".join(parts[2:])}
+        if shop:
+            w["shop"] = shop
+        config["watches"].append(w)
+        reply(webhook, "✅ 추가됨: [%s] `%s` — 다음 실행(최대 30분)부터 감시합니다." % (parts[1], w["keyword"]))
+        return True
+    if cmd in ("삭제", "remove", "del"):
+        ws = config["watches"]
+        if len(parts) < 2 or not parts[1].isdigit():
+            reply(webhook, "사용법: `삭제 <번호>` — 번호는 `목록`으로 확인")
+            return False
+        idx = int(parts[1]) - 1
+        if 0 <= idx < len(ws):
+            removed = ws.pop(idx)
+            reply(webhook, "🗑️ 삭제됨: `%s`" % removed.get("keyword", ""))
+            return True
+        reply(webhook, "그 번호는 없어요. `목록`으로 확인하세요.")
+        return False
+    if cmd in ("목록", "list"):
+        ws = config["watches"]
+        if not ws:
+            reply(webhook, "감시 목록이 비어 있어요. `추가`로 등록하세요.")
+            return False
+        lines = ["📋 감시 목록"]
+        for i, w in enumerate(ws, 1):
+            tag = w["source"] + ("/" + w["shop"] if w.get("shop") else "")
+            lines.append("%d. [%s] %s" % (i, tag, w["keyword"]))
+        reply(webhook, "\n".join(lines))
+        return False
+    if cmd in ("도움", "help", "명령어"):
+        reply(webhook, HELP_TEXT)
+        return False
+    return False  # 명령이 아닌 일반 메시지는 무시
+
+
+def process_commands(config, state, webhook):
+    """디스코드 명령 채널을 읽어 키워드 추가/삭제 처리. config 변경 시 True."""
+    token = os.environ.get("DISCORD_BOT_TOKEN")
+    channel = os.environ.get("DISCORD_CHANNEL_ID")
+    if not token or not channel:
+        return False  # 명령 기능 미설정 → 알림만 동작
+    after = state.get("_cmd_last_id")
+    try:
+        msgs = discord_get_messages(token, channel, after)
+    except Exception as e:
+        print("명령 읽기 실패:", e)
+        return False
+    if not msgs:
+        return False
+    if after is None:
+        # 첫 실행: 기존 메시지는 명령으로 처리하지 않고 기준점만 저장
+        state["_cmd_last_id"] = str(max(int(m["id"]) for m in msgs))
+        return True
+    changed = False
+    for m in sorted(msgs, key=lambda x: int(x["id"])):
+        state["_cmd_last_id"] = m["id"]
+        if m.get("author", {}).get("bot"):
+            continue
+        if handle_command((m.get("content") or "").strip(), config, webhook):
+            changed = True
+    return True  # 메시지를 읽어 처리 포인터(_cmd_last_id)가 갱신됨
+
+
 # ---------------------------------------------------------------- main
 def watch_label(w):
     src = w["source"]
@@ -303,6 +415,13 @@ def main():
             state = json.load(f)
 
     changed = False
+
+    # 디스코드 명령 처리 (키워드 추가/삭제/목록) → config 변경 시 저장
+    if process_commands(config, state, webhook):
+        with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+            json.dump(config, f, ensure_ascii=False, indent=2)
+        changed = True
+
     for w in config["watches"]:
         label = watch_label(w)
         fn = SOURCES.get(w["source"])
