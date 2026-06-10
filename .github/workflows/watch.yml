@@ -1,0 +1,36 @@
+name: shopping-watch
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'   # 30분마다 (UTC 기준이지만 간격이라 무관)
+  workflow_dispatch:          # 수동 실행 버튼
+
+permissions:
+  contents: write             # seen.json 커밋용
+
+concurrency:
+  group: shopping-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run watcher
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: python watcher.py
+
+      - name: Commit seen state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add seen.json
+          git commit -m "update seen state [skip ci]" || echo "변경 없음"
+          git push

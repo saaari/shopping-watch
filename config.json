@@ -1,0 +1,11 @@
+{
+  "_안내": "watches 목록을 자유롭게 추가/수정하세요. source 종류: bunjang / japanq(shop 지정) / joongna / amazon_us / ebay_us. japanq의 shop: mercari, rakuten, yhshop, amazon_jp, yhauc. price_min/price_max는 그 사이트 통화 기준(번개·중고나라=원, japanq=엔, 아마존·이베이=달러)이며 생략 가능.",
+  "watches": [
+    { "source": "bunjang", "keyword": "슈프림 박스로고", "price_max": 300000 },
+    { "source": "joongna", "keyword": "슈프림 박스로고" },
+    { "source": "japanq", "shop": "mercari", "keyword": "シュプリーム ボックスロゴ", "price_max": 30000 },
+    { "source": "japanq", "shop": "yhauc", "keyword": "シュプリーム" },
+    { "source": "amazon_us", "keyword": "supreme box logo tee" },
+    { "source": "ebay_us", "keyword": "supreme box logo" }
+  ]
+}
