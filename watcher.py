@@ -404,8 +404,8 @@ def watch_key(w):
 def main():
     webhook = os.environ.get("DISCORD_WEBHOOK_URL")
     if not webhook:
-        print("DISCORD_WEBHOOK_URL 환경변수가 없습니다.")
-        sys.exit(1)
+        print("DISCORD_WEBHOOK_URL 미설정 — 알림 보낼 곳이 없어 이번엔 건너뜁니다. (시크릿 등록하면 동작)")
+        return
 
     with open(CONFIG_FILE, encoding="utf-8") as f:
         config = json.load(f)
