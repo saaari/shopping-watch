@@ -407,6 +407,11 @@ def main():
         print("DISCORD_WEBHOOK_URL 미설정 — 알림 보낼 곳이 없어 이번엔 건너뜁니다. (시크릿 등록하면 동작)")
         return
 
+    if os.environ.get("TEST_PING") == "true":
+        reply(webhook, "✅ 테스트: 웹훅 연결 정상입니다. 새 매물이 올라오면 여기로 알림이 옵니다.")
+        print("테스트 메시지 전송 완료")
+        return
+
     with open(CONFIG_FILE, encoding="utf-8") as f:
         config = json.load(f)
     state = {}
