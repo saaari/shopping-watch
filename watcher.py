@@ -253,7 +253,10 @@ SOURCES = {
 # ---------------------------------------------------------------- 디스코드
 def _post_json(url, payload):
     body = json.dumps(payload).encode()
-    req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
+    req = urllib.request.Request(url, data=body, headers={
+        "Content-Type": "application/json",
+        # 디스코드는 User-Agent 없으면 403 → 반드시 지정
+        "User-Agent": "shopping-watch (github.com/saaari/shopping-watch, 1.0)"})
     with urllib.request.urlopen(req, timeout=30) as r:
         r.read()
 
