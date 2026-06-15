@@ -8,6 +8,16 @@
     { "source": "japanq", "shop": "mercari", "keyword": "グレゴリー オールデイ" },
     { "source": "japanq", "shop": "yhauc", "keyword": "グレゴリー オールデイ" },
     { "source": "japanq", "shop": "mercari", "keyword": "グレゴリー オールデイ PFM" },
-    { "source": "japanq", "shop": "yhauc", "keyword": "グレゴリー オールデイ PFM" }
+    { "source": "japanq", "shop": "yhauc", "keyword": "グレゴリー オールデイ PFM" },
+
+    { "source": "bunjang", "keyword": "그레고리 데이팩" },
+    { "source": "joongna", "keyword": "그레고리 데이팩" },
+    { "source": "japanq", "shop": "mercari", "keyword": "グレゴリー デイパック" },
+    { "source": "japanq", "shop": "rakuten", "keyword": "グレゴリー デイパック" },
+    { "source": "japanq", "shop": "yhshop", "keyword": "グレゴリー デイパック" },
+    { "source": "japanq", "shop": "amazon_jp", "keyword": "グレゴリー デイパック" },
+    { "source": "japanq", "shop": "yhauc", "keyword": "グレゴリー デイパック" },
+    { "source": "amazon_us", "keyword": "Gregory daypack" },
+    { "source": "ebay_us", "keyword": "Gregory daypack" }
   ]
 }
