@@ -1,0 +1,297 @@
+[
+ {
+  "res": "keeper_walk_0",
+  "src": "art/pixellab/keeper_final/anim-walk-unknown-00.png",
+  "group": "keeper"
+ },
+ {
+  "res": "keeper_walk_1",
+  "src": "art/pixellab/keeper_final/anim-walk-unknown-01.png",
+  "group": "keeper"
+ },
+ {
+  "res": "keeper_walk_2",
+  "src": "art/pixellab/keeper_final/anim-walk-unknown-02.png",
+  "group": "keeper"
+ },
+ {
+  "res": "keeper_walk_3",
+  "src": "art/pixellab/keeper_final/anim-walk-unknown-03.png",
+  "group": "keeper"
+ },
+ {
+  "res": "keeper_walk_4",
+  "src": "art/pixellab/keeper_final/anim-walk-unknown-04.png",
+  "group": "keeper"
+ },
+ {
+  "res": "soso_walk_0",
+  "src": "art/pixellab/soso_final/anim-walk-unknown-00.png",
+  "group": "soso"
+ },
+ {
+  "res": "soso_walk_1",
+  "src": "art/pixellab/soso_final/anim-walk-unknown-01.png",
+  "group": "soso"
+ },
+ {
+  "res": "soso_walk_2",
+  "src": "art/pixellab/soso_final/anim-walk-unknown-02.png",
+  "group": "soso"
+ },
+ {
+  "res": "soso_walk_3",
+  "src": "art/pixellab/soso_final/anim-walk-unknown-03.png",
+  "group": "soso"
+ },
+ {
+  "res": "soso_walk_4",
+  "src": "art/pixellab/soso_final/anim-walk-unknown-04.png",
+  "group": "soso"
+ },
+ {
+  "res": "jaebul_walk_0",
+  "src": "art/pixellab/jaebul_final/anim-walk-unknown-00.png",
+  "group": "jaebul"
+ },
+ {
+  "res": "jaebul_walk_1",
+  "src": "art/pixellab/jaebul_final/anim-walk-unknown-01.png",
+  "group": "jaebul"
+ },
+ {
+  "res": "jaebul_walk_2",
+  "src": "art/pixellab/jaebul_final/anim-walk-unknown-02.png",
+  "group": "jaebul"
+ },
+ {
+  "res": "jaebul_walk_3",
+  "src": "art/pixellab/jaebul_final/anim-walk-unknown-03.png",
+  "group": "jaebul"
+ },
+ {
+  "res": "jaebul_walk_4",
+  "src": "art/pixellab/jaebul_final/anim-walk-unknown-04.png",
+  "group": "jaebul"
+ },
+ {
+  "res": "nampung_walk_0",
+  "src": "art/pixellab/nampung_final/anim-walk-unknown-00.png",
+  "group": "nampung"
+ },
+ {
+  "res": "nampung_walk_1",
+  "src": "art/pixellab/nampung_final/anim-walk-unknown-01.png",
+  "group": "nampung"
+ },
+ {
+  "res": "nampung_walk_2",
+  "src": "art/pixellab/nampung_final/anim-walk-unknown-02.png",
+  "group": "nampung"
+ },
+ {
+  "res": "nampung_walk_3",
+  "src": "art/pixellab/nampung_final/anim-walk-unknown-03.png",
+  "group": "nampung"
+ },
+ {
+  "res": "nampung_walk_4",
+  "src": "art/pixellab/nampung_final/anim-walk-unknown-04.png",
+  "group": "nampung"
+ },
+ {
+  "res": "fox_walk_0",
+  "src": "art/pixellab/fox_final/anim-walk-unknown-00.png",
+  "group": "fox"
+ },
+ {
+  "res": "fox_walk_1",
+  "src": "art/pixellab/fox_final/anim-walk-unknown-01.png",
+  "group": "fox"
+ },
+ {
+  "res": "fox_walk_2",
+  "src": "art/pixellab/fox_final/anim-walk-unknown-02.png",
+  "group": "fox"
+ },
+ {
+  "res": "fox_walk_3",
+  "src": "art/pixellab/fox_final/anim-walk-unknown-03.png",
+  "group": "fox"
+ },
+ {
+  "res": "fox_walk_4",
+  "src": "art/pixellab/fox_final/anim-walk-unknown-04.png",
+  "group": "fox"
+ },
+ {
+  "res": "umbrella_walk_0",
+  "src": "art/pixellab/umbrella_final/anim-walk-unknown-00.png",
+  "group": "umbrella"
+ },
+ {
+  "res": "umbrella_walk_1",
+  "src": "art/pixellab/umbrella_final/anim-walk-unknown-01.png",
+  "group": "umbrella"
+ },
+ {
+  "res": "umbrella_walk_2",
+  "src": "art/pixellab/umbrella_final/anim-walk-unknown-02.png",
+  "group": "umbrella"
+ },
+ {
+  "res": "umbrella_walk_3",
+  "src": "art/pixellab/umbrella_final/anim-walk-unknown-03.png",
+  "group": "umbrella"
+ },
+ {
+  "res": "umbrella_walk_4",
+  "src": "art/pixellab/umbrella_final/anim-walk-unknown-04.png",
+  "group": "umbrella"
+ },
+ {
+  "res": "keeper_cook_0",
+  "src": "art/pixellab/keeper_final/anim-cook-unknown-00.png",
+  "group": "keeper"
+ },
+ {
+  "res": "keeper_cook_1",
+  "src": "art/pixellab/keeper_final/anim-cook-unknown-01.png",
+  "group": "keeper"
+ },
+ {
+  "res": "keeper_cook_2",
+  "src": "art/pixellab/keeper_final/anim-cook-unknown-02.png",
+  "group": "keeper"
+ },
+ {
+  "res": "keeper_cook_3",
+  "src": "art/pixellab/keeper_final/anim-cook-unknown-03.png",
+  "group": "keeper"
+ },
+ {
+  "res": "keeper_cook_4",
+  "src": "art/pixellab/keeper_final/anim-cook-unknown-04.png",
+  "group": "keeper"
+ },
+ {
+  "res": "hearth_ember",
+  "src": "art/pixellab/hearth_states/hearth_ember.png",
+  "group": "hearth"
+ },
+ {
+  "res": "hearth_mid",
+  "src": "art/pixellab/hearth_candidates/fra-00.png",
+  "group": "hearth"
+ },
+ {
+  "res": "hearth_strong",
+  "src": "art/pixellab/hearth_states/hearth_strong.png",
+  "group": "hearth"
+ },
+ {
+  "res": "hearth_blue",
+  "src": "art/pixellab/hearth_states/hearth_blue.png",
+  "group": "hearth"
+ },
+ {
+  "res": "table",
+  "src": "art/pixellab/furniture_candidates/fra-00.png"
+ },
+ {
+  "res": "counter",
+  "src": "art/pixellab/furniture_candidates/fra-01.png"
+ },
+ {
+  "res": "chair",
+  "src": "art/pixellab/furniture_candidates/fra-02.png"
+ },
+ {
+  "res": "menu_board",
+  "src": "art/pixellab/furniture_candidates/fra-03.png"
+ },
+ {
+  "res": "shelf",
+  "src": "art/pixellab/furniture_candidates/fra-05.png"
+ },
+ {
+  "res": "barrel",
+  "src": "art/pixellab/furniture_candidates/fra-06.png"
+ },
+ {
+  "res": "grandfather_clock",
+  "src": "art/pixellab/furniture_candidates/fra-10.png"
+ },
+ {
+  "res": "rug",
+  "src": "art/pixellab/furniture_candidates/fra-13.png"
+ },
+ {
+  "res": "prop_dish",
+  "src": "art/pixellab/props_candidates/fra-00.png"
+ },
+ {
+  "res": "prop_dishstack",
+  "src": "art/pixellab/props_candidates/fra-01.png"
+ },
+ {
+  "res": "prop_crate",
+  "src": "art/pixellab/props_candidates/fra-02.png"
+ },
+ {
+  "res": "prop_lantern",
+  "src": "art/pixellab/props_candidates/fra-03.png"
+ },
+ {
+  "res": "prop_wallclock",
+  "src": "art/pixellab/props_candidates/fra-04.png"
+ },
+ {
+  "res": "prop_sign",
+  "src": "art/pixellab/props_candidates/fra-05.png"
+ },
+ {
+  "res": "prop_kettle",
+  "src": "art/pixellab/props_candidates/fra-20.png"
+ },
+ {
+  "res": "prop_apples",
+  "src": "art/pixellab/props_candidates/fra-22.png"
+ },
+ {
+  "res": "prop_postcards",
+  "src": "art/pixellab/props_candidates/fra-40.png"
+ },
+ {
+  "res": "prop_firewood",
+  "src": "art/pixellab/props_candidates/fra-42.png"
+ },
+ {
+  "res": "prop_suitcase",
+  "src": "art/pixellab/props_candidates/fra-46.png"
+ },
+ {
+  "res": "prop_trainplaque",
+  "src": "art/pixellab/props_candidates/fra-52.png"
+ },
+ {
+  "res": "tile_floor",
+  "src": "art/pixellab/background_candidates/fra-15.png"
+ },
+ {
+  "res": "tile_wall",
+  "src": "art/pixellab/background_candidates/fra-04.png"
+ },
+ {
+  "res": "window",
+  "src": "art/pixellab/background_candidates/fra-02.png"
+ },
+ {
+  "res": "door",
+  "src": "art/pixellab/background_candidates/fra-52.png"
+ },
+ {
+  "res": "map",
+  "src": "art/pixellab/background_candidates/fra-29.png"
+ }
+]

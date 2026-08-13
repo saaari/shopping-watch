@@ -1,0 +1,182 @@
+{
+ "keeper": {
+  "batch": "6a53ade8",
+  "pick": 0,
+  "object": "2fbbe884-4617-460f-9765-4da2601392a3"
+ },
+ "soso": {
+  "batch": "4dde23d8",
+  "pick": 12,
+  "object": "ab172fe1-d376-44c7-aee7-4fec6c6bf85f"
+ },
+ "jaebul": {
+  "batch": "71e5e331",
+  "pick": 63,
+  "object": "0f61e3d3-c246-4b8b-b7c2-12b6f5301a9c"
+ },
+ "nampung": {
+  "batch": "8439e1e3",
+  "pick": 4,
+  "object": "3e8c1242-2c11-46ae-9275-61dc19699257"
+ },
+ "fox": {
+  "batch": "c6064c33",
+  "pick": 0,
+  "object": "82dea813-1429-435e-9888-f670d01d2791"
+ },
+ "umbrella": {
+  "batch": "1a88f188",
+  "pick": 19,
+  "object": "19cc620a-b632-41fb-acef-e85535f9f1a3"
+ },
+ "hearth": {
+  "batch": "cf74f035",
+  "pick": 0,
+  "src": "art/pixellab/hearth_candidates/fra-00.png"
+ },
+ "table": {
+  "batch": "939fcdbe",
+  "pick": 0,
+  "src": "art/pixellab/furniture_candidates/fra-00.png"
+ },
+ "counter": {
+  "batch": "939fcdbe",
+  "pick": 1,
+  "src": "art/pixellab/furniture_candidates/fra-01.png"
+ },
+ "chair": {
+  "batch": "939fcdbe",
+  "pick": 2,
+  "src": "art/pixellab/furniture_candidates/fra-02.png"
+ },
+ "menu_board": {
+  "batch": "939fcdbe",
+  "pick": 3,
+  "src": "art/pixellab/furniture_candidates/fra-03.png"
+ },
+ "shelf": {
+  "batch": "939fcdbe",
+  "pick": 5,
+  "src": "art/pixellab/furniture_candidates/fra-05.png"
+ },
+ "barrel": {
+  "batch": "939fcdbe",
+  "pick": 6,
+  "src": "art/pixellab/furniture_candidates/fra-06.png"
+ },
+ "painting": {
+  "batch": "939fcdbe",
+  "pick": 7,
+  "src": "art/pixellab/furniture_candidates/fra-07.png"
+ },
+ "bread_rack": {
+  "batch": "939fcdbe",
+  "pick": 9,
+  "src": "art/pixellab/furniture_candidates/fra-09.png"
+ },
+ "clock": {
+  "batch": "939fcdbe",
+  "pick": 10,
+  "src": "art/pixellab/furniture_candidates/fra-10.png"
+ },
+ "chandelier": {
+  "batch": "939fcdbe",
+  "pick": 12,
+  "src": "art/pixellab/furniture_candidates/fra-12.png"
+ },
+ "rug": {
+  "batch": "939fcdbe",
+  "pick": 13,
+  "src": "art/pixellab/furniture_candidates/fra-13.png"
+ },
+ "window": {
+  "batch": "736ec4c6",
+  "pick": 2,
+  "src": "art/pixellab/background_candidates/fra-02.png"
+ },
+ "prop_dish": {
+  "batch": "1ca02191",
+  "pick": 0,
+  "src": "art/pixellab/props_candidates/fra-00.png"
+ },
+ "prop_dishstack": {
+  "batch": "1ca02191",
+  "pick": 1,
+  "src": "art/pixellab/props_candidates/fra-01.png"
+ },
+ "prop_crate": {
+  "batch": "1ca02191",
+  "pick": 2,
+  "src": "art/pixellab/props_candidates/fra-02.png"
+ },
+ "prop_lantern": {
+  "batch": "1ca02191",
+  "pick": 3,
+  "src": "art/pixellab/props_candidates/fra-03.png"
+ },
+ "prop_wallclock": {
+  "batch": "1ca02191",
+  "pick": 4,
+  "src": "art/pixellab/props_candidates/fra-04.png"
+ },
+ "prop_sign": {
+  "batch": "1ca02191",
+  "pick": 5,
+  "src": "art/pixellab/props_candidates/fra-05.png"
+ },
+ "prop_kettle": {
+  "batch": "1ca02191",
+  "pick": 20,
+  "src": "art/pixellab/props_candidates/fra-20.png"
+ },
+ "prop_apples": {
+  "batch": "1ca02191",
+  "pick": 22,
+  "src": "art/pixellab/props_candidates/fra-22.png"
+ },
+ "prop_postcards": {
+  "batch": "1ca02191",
+  "pick": 40,
+  "src": "art/pixellab/props_candidates/fra-40.png"
+ },
+ "prop_firewood": {
+  "batch": "1ca02191",
+  "pick": 42,
+  "src": "art/pixellab/props_candidates/fra-42.png"
+ },
+ "prop_suitcase": {
+  "batch": "1ca02191",
+  "pick": 46,
+  "src": "art/pixellab/props_candidates/fra-46.png"
+ },
+ "prop_trainplaque": {
+  "batch": "1ca02191",
+  "pick": 52,
+  "src": "art/pixellab/props_candidates/fra-52.png"
+ },
+ "tile_floor": {
+  "batch": "736ec4c6",
+  "pick": 15,
+  "src": "art/pixellab/background_candidates/fra-15.png"
+ },
+ "tile_wall": {
+  "batch": "736ec4c6",
+  "pick": 4,
+  "src": "art/pixellab/background_candidates/fra-04.png"
+ },
+ "door": {
+  "batch": "736ec4c6",
+  "pick": 52,
+  "src": "art/pixellab/background_candidates/fra-52.png"
+ },
+ "map": {
+  "batch": "736ec4c6",
+  "pick": 29,
+  "src": "art/pixellab/background_candidates/fra-29.png"
+ },
+ "window_curtain": {
+  "batch": "939fcdbe",
+  "pick": 15,
+  "src": "art/pixellab/furniture_candidates/fra-15.png"
+ }
+}
