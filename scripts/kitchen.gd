@@ -6,8 +6,8 @@ signal dish_ready
 
 const PREP_TIME := 30.0          # 손질
 const BOOST_PREP_TIME := 0.5     # 개입: 재료 손질 클릭
-const DISH_INTERVAL := 300.0     # 접시가 나오는 간격 (5분)
-const SERVINGS_PER_POT := 8      # 솥 하나에서 나오는 접시 수
+const DISH_INTERVAL_BASE := 300.0  # 접시 간격 기준 (단계마다 -30초 — 주방이 커진다)
+const SERVINGS_BASE := 8           # 솥당 접시 기준 (단계마다 +2 — 솥이 커진다)
 const READY_CAP := 4             # 완성 접시 대기 상한 (넘치면 솥이 뜸을 들임)
 
 var prepping := false
@@ -33,7 +33,7 @@ func _process(delta: float) -> void:
 		prep_left -= delta
 		if prep_left <= 0.0:
 			prepping = false
-			pot_servings = SERVINGS_PER_POT
+			pot_servings = SERVINGS_BASE + 2 * (State.stage - 1)
 			dish_left = _next_interval()
 	# 뭉근히 끓기 — 간격마다 접시 하나
 	if pot_servings > 0 and ready_dishes < READY_CAP:
@@ -46,10 +46,11 @@ func _process(delta: float) -> void:
 	cooking = pot_servings > 0 or prepping
 
 func _next_interval() -> float:
+	var interval := DISH_INTERVAL_BASE - 30.0 * (State.stage - 1)
 	if boost_next_cook:
 		boost_next_cook = false
-		return DISH_INTERVAL * 0.5
-	return DISH_INTERVAL
+		return interval * 0.5
+	return interval
 
 ## 완성 접시 1개 소비 (손님 식사 시작 시)
 func take_dish() -> bool:

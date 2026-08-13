@@ -24,7 +24,8 @@ var interventions_today: int = 0
 var dishes_served: int = 0
 var fire_state: String = "mid"      # ember/mid/strong/blue (P1: 슬라이더 스텁, 감쇠 비구현)
 var menu: Array = ["주먹밥", "국밥", "볶음국수"]  # 메뉴판 3칸
-var upgrades: Dictionary = {}       # lantern/stove/table3 -> true
+var upgrades: Dictionary = {}       # lantern/stove -> true
+var stage: int = 1                  # 식당 성장 단계 (1~5)
 
 func add_money(v: int) -> void:
 	money += v
@@ -66,6 +67,7 @@ func save_game(path: String = SAVE_PATH) -> void:
 		"interventions_today": interventions_today,
 		"day": Time.get_date_string_from_system(),
 		"fire_state": fire_state, "menu": menu, "upgrades": upgrades,
+		"stage": stage,
 		"last_ts": Time.get_unix_time_from_system(),
 	}
 	var f := FileAccess.open(path, FileAccess.WRITE)
@@ -92,6 +94,7 @@ func load_game(path: String = SAVE_PATH) -> float:
 	fire_state = str(d.get("fire_state", "mid"))
 	menu = d.get("menu", menu)
 	upgrades = d.get("upgrades", {})
+	stage = clampi(int(d.get("stage", 1)), 1, 5)
 	money_changed.emit(money)
 	pantry_changed.emit()
 	return maxf(0.0, Time.get_unix_time_from_system() - float(d.get("last_ts", 0)))

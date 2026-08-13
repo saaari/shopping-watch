@@ -178,5 +178,30 @@
   "batch": "939fcdbe",
   "pick": 15,
   "src": "art/pixellab/furniture_candidates/fra-15.png"
+ },
+ "moss": {
+  "batch": "6769d992",
+  "pick": 0,
+  "object": "21d7852e-1e57-426f-b2d5-1c8f440f5231"
+ },
+ "magpie": {
+  "batch": "644f50b0",
+  "pick": 0,
+  "object": "d3d92016-00be-4e5f-a3b6-40a9e1a24770"
+ },
+ "tanuki": {
+  "batch": "c80179d0",
+  "pick": 16,
+  "object": "523c4c73-f40e-4600-a71b-528ea16dcf89"
+ },
+ "star": {
+  "batch": "f816deea",
+  "pick": 0,
+  "object": "f92476f1-32e7-4f0f-a72b-496c686d82c8"
+ },
+ "busser": {
+  "batch": "3bb327e1",
+  "pick": 1,
+  "object": "514a4268-c155-42db-9019-7a1b1f13aee6"
  }
 }

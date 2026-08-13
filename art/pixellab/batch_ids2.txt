@@ -1,0 +1,9 @@
+moss 6769d992-d5f2-4673-97e7-c5c89947831a
+magpie 644f50b0-bff7-4cca-b714-e07ca8b9d5a1
+tanuki c80179d0-7add-4bf8-820d-7dc5f08c43f9
+star f816deea-dbb4-49b7-8bc5-db5ec4228d4d
+busser 97541eea-d8e7-40d6-81ff-8536f0fb20ba
+foods ffd009c4-3293-423e-92f6-ab86b91dd535
+plates e571ba5e-5e06-4e73-a8b2-c79051a4326e
+deco d3c9bade-affa-4104-8c0b-3df7ea916d7c
+busser2 3bb327e1-ce2a-4661-86be-e7884fe5488a
