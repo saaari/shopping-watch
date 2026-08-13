@@ -49,8 +49,10 @@ func _process(delta: float) -> void:
 			else:
 				wait_left -= delta
 				if wait_left <= 0.0:  # 차 한 잔 룰
-					State.add_money(TEA_PAY)
-					paid.emit(self, TEA_PAY)
+					# 잉걸불 날의 손님은 애초에 불을 쬐러 온 것 — 찻값을 후하게 놓고 간다
+					var pay := 5 if State.fire_state == "ember" else TEA_PAY
+					State.add_money(pay)
+					paid.emit(self, pay)
 					_leave()
 		S.EATING:
 			eat_left -= delta

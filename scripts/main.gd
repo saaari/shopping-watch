@@ -43,7 +43,7 @@ const FIRE_LABEL := {
 	"blue": "오늘의 불: 푸른 불 — 유령 노선이 정차합니다",
 }
 const FIRE_SPAWN := {
-	"ember": [450.0, 650.0], "mid": [280.0, 400.0],
+	"ember": [600.0, 850.0], "mid": [280.0, 400.0],
 	"strong": [220.0, 340.0], "blue": [240.0, 340.0],
 }
 const FAVS := {"soso": "아침", "nampung": "볶음", "fox": "국물", "umbrella": "국물",
@@ -108,6 +108,13 @@ func _ready() -> void:
 	t.timeout.connect(_tick_clock)
 	add_child(t)
 	t.start()
+	var flick := Timer.new()  # 불 일렁임 (0.6초 2프레임 — 저프레임 원칙)
+	flick.wait_time = 0.6
+	flick.timeout.connect(func() -> void:
+		hearth_flip = not hearth_flip
+		set_fire_state(State.fire_state))
+	add_child(flick)
+	flick.start()
 	State.money_changed.connect(func(v: int) -> void: money_label.text = "코인 %d" % v)
 	State.keeper_says.connect(_keeper_say)
 	State.fire_changed.connect(_on_fire_changed)
@@ -297,8 +304,10 @@ func _clickzone(rect: Rect2, handler: Callable) -> void:
 			handler.call())
 	scene_root.add_child(c)
 
+var hearth_flip := false
 func set_fire_state(state_name: String) -> void:
-	hearth.texture = _tex("hearth_%s" % state_name)
+	var suffix := "_b" if hearth_flip and _has_tex("hearth_%s_b" % state_name) else ""
+	hearth.texture = _tex("hearth_%s%s" % [state_name, suffix])
 
 func _on_fire_changed(s: String) -> void:
 	set_fire_state(s)
@@ -742,6 +751,9 @@ func _run_sim(days: int) -> void:
 	_rebuild_scene()
 	_on_fire_changed(State.fire_state)
 	var fires := ["mid", "blue", "strong", "mid", "strong", "blue", "strong"]
+	if OS.get_environment("WNW_SIM_FIRE") != "":
+		var ff := OS.get_environment("WNW_SIM_FIRE")
+		fires = [ff, ff, ff, ff, ff, ff, ff]
 	var baits := ["국밥", "볶음국수", "주먹밥", "국밥", "야식꼬치", "볶음국수", "국밥"]
 	for day in days:
 		print("SIMSTART day=%d stage=%d" % [day + 1, State.stage])
@@ -755,6 +767,8 @@ func _run_sim(days: int) -> void:
 		clears_by_staff = 0
 		clears_by_click = 0
 		var walk_n := randi_range(5, 9) if State.fire_state == "mid" else randi_range(8, 12)
+		if State.fire_state == "ember":
+			walk_n = randi_range(1, 3)  # 안 걸은 주 — 재료 빈약
 		State.add_ingredients("곡물", ["맑음"], walk_n)
 		if State.fire_state == "blue":
 			State.add_ingredients("빗물 채소", ["비", "저녁"], 3)
