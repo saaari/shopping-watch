@@ -7,13 +7,16 @@ signal left(customer)
 enum S { ARRIVING, WAITING, EATING, LEAVING }
 
 const SPEED := 40.0     # 논리 px/s
-const EAT_TIME := 5.0
+const EAT_TIME := 160.0 # 식사도 실시간 규모 — 앉아 있는 손님이 장면을 만든다
 const PAY := 10
+const TEA_WAIT := 240.0 # 이만큼 기다리면 차만 마시고 흐뭇하게 떠난다 (무벌 회전)
+const TEA_PAY := 3
 const EXIT_X := 660.0
 
 var state: int = S.ARRIVING
 var seat_x := 0.0
 var eat_left := 0.0
+var wait_left := TEA_WAIT
 var kitchen: Node
 var guest_name := ""
 var sprite: AnimatedSprite2D
@@ -37,6 +40,15 @@ func _process(delta: float) -> void:
 		S.WAITING:
 			if kitchen != null and kitchen.take_dish():
 				_start_eating()
+			else:
+				# 차 한 잔 룰 — 오래 기다린 손님은 화내지 않는다.
+				# 차만 마시고 소소하게 계산하고 흐뭇하게 떠난다 (좌석 회전).
+				wait_left -= delta
+				if wait_left <= 0.0:
+					State.add_money(TEA_PAY)
+					state = S.LEAVING
+					sprite.flip_h = true
+					sprite.play("walk")
 		S.EATING:
 			eat_left -= delta
 			if eat_left <= 0.0:

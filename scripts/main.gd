@@ -22,20 +22,20 @@ const FIRE_LABEL := {
 	"strong": "오늘의 불: 센불 — 특급이 섭니다",
 	"blue": "오늘의 불: 푸른 불 — 유령 노선이 정차합니다",
 }
-const FIRE_SPAWN := {  # [min, max] 스폰 간격 — 잉걸불도 살아 있어야 한다
-	"ember": [12.0, 18.0], "mid": [8.0, 14.0],
-	"strong": [6.0, 11.0], "blue": [5.0, 10.0],
+const FIRE_SPAWN := {  # [min, max] 스폰 간격(게임초) — 잉걸불도 살아 있어야 한다
+	"ember": [450.0, 650.0], "mid": [280.0, 400.0],
+	"strong": [220.0, 340.0], "blue": [240.0, 340.0],
 }
 ## 손님 취향 계열 (여정 카드) — 메뉴에 있으면 가중 ×3 (메뉴 = 미끼)
 const FAVS := {"soso": "아침", "nampung": "볶음", "fox": "국물", "umbrella": "국물"}
 
 ## 장면형 업그레이드 (순수 % 금지 — 전부 보이는 변화, GDD §4.6)
 const UPGRADES := [
-	{"key": "lantern", "name": "승강장 등불", "price": 30,
+	{"key": "lantern", "name": "승강장 등불", "price": 150,
 	 "desc": "역이 밝아지고 손님 발걸음이 잦아진다"},
-	{"key": "stove", "name": "대합실 난로", "price": 50,
+	{"key": "stove", "name": "대합실 난로", "price": 400,
 	 "desc": "잿불이가 불을 쬐러 자주 온다"},
-	{"key": "table3", "name": "테이블 하나 더", "price": 80,
+	{"key": "table3", "name": "테이블 하나 더", "price": 800,
 	 "desc": "자리가 늘어난다"},
 ]
 
@@ -81,6 +81,7 @@ var ready_dish: TextureRect
 var menu_panel: PanelContainer
 var shop_panel: PanelContainer
 var invite_panel: PanelContainer
+var guest_log: Array = []  # 시뮬 계측용
 
 func _ready() -> void:
 	_setup_font()
@@ -99,7 +100,8 @@ func _ready() -> void:
 	_on_fire_changed(State.fire_state)
 	var smoke := OS.get_environment("WNW_SMOKE") == "1"
 	var shot := OS.get_environment("WNW_SHOT")
-	if not smoke and shot.is_empty():
+	var sim := OS.get_environment("WNW_SIM") != ""
+	if not smoke and shot.is_empty() and not sim:
 		_load_and_greet()
 		var auto := Timer.new()  # 상시 저장 (강제 종료 대비)
 		auto.wait_time = 60.0
@@ -111,6 +113,8 @@ func _ready() -> void:
 		_run_smoke()
 	elif not shot.is_empty():
 		_run_shot(shot)
+	elif OS.get_environment("WNW_SIM") != "":
+		_run_sim(int(OS.get_environment("WNW_SIM")))
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST and OS.get_environment("WNW_SMOKE") != "1":
@@ -358,6 +362,7 @@ func _spawn_customer() -> Node2D:
 		return null
 	var seat: float = free.pick_random()
 	var gname := _pick_guest()
+	guest_log.append(gname)
 	var c: Node2D = Node2D.new()
 	c.set_script(CustomerScript)
 	c.setup(_char_frames(gname, ["walk"]))
@@ -422,9 +427,9 @@ func _sky_color(hour: int) -> Color:
 ## ---- 검수 훅 ----
 
 func _run_smoke() -> void:
-	Engine.time_scale = 10.0
+	Engine.time_scale = 100.0
 	State.add_ingredients("곡물", ["맑음"], 8)
-	await get_tree().create_timer(90.0).timeout
+	await get_tree().create_timer(4000.0).timeout
 	var ok: bool = State.dishes_served >= 2 and State.money >= 20
 	var granted := 0
 	for i in 12:
@@ -448,12 +453,79 @@ func _run_smoke() -> void:
 		State.dishes_served, granted, str(State.money == 123), "PASS" if ok else "FAIL"])
 	get_tree().quit(0 if ok else 1)
 
+## 재미 QA 시뮬레이션 — 가상 플레이어가 N일을 플레이 (하루 = 근무 8시간 = 28,800 게임초)
+## 지표: 주방 가동률 / 착석 손님 중 굶는 비율 / 빈 화면 비율 / 수익 / 손님 다양성
+func _run_sim(days: int) -> void:
+	Engine.time_scale = 600.0
+	State.money = 0
+	State.upgrades = {}
+	State.dishes_served = 0
+	var fires := ["mid", "blue", "strong", "mid", "strong"]
+	var baits := ["국밥", "볶음국수", "주먹밥", "국밥", "볶음국수"]
+	for day in days:
+		State.interventions_today = 0
+		State.set_fire(fires[day % fires.size()])
+		State.set_menu_slot(0, baits[day % baits.size()])
+		var coins0 := State.money
+		var served0 := State.dishes_served
+		guest_log.clear()
+		State.add_ingredients("곡물", ["맑음"], randi_range(5, 9))  # 아침 장보기
+		if State.fire_state == "blue":
+			State.add_ingredients("빗물 채소", ["비", "저녁"], 3)
+		var kitchen_active := 0
+		var waiting_total := 0
+		var seated_total := 0
+		var empty_scene := 0
+		var clicks := 0
+		var bought: Array = []
+		for s in 480:  # 60게임초 간격 480샘플
+			await get_tree().create_timer(60.0).timeout
+			if kitchen.prepping or kitchen.cooking:
+				kitchen_active += 1
+			var seated := 0
+			var waiting := 0
+			for c in seats.values():
+				if c.state != c.S.LEAVING:
+					seated += 1
+					if c.state == c.S.WAITING:
+						waiting += 1
+			seated_total += seated
+			waiting_total += waiting
+			if seated == 0:
+				empty_scene += 1
+			if clicks < 10 and randf() < 0.3:  # 플레이어 개입 흉내
+				if ready_dish.visible:
+					_on_serve_click(); clicks += 1
+				elif dish_stack.visible:
+					_on_dish_click(); clicks += 1
+				elif prep_crate.visible:
+					_on_prep_click(); clicks += 1
+			for u in UPGRADES:  # 여유 20코인 남기고 구매
+				if not State.upgrades.get(u.key, false) and State.money >= u.price + 20:
+					State.add_money(-u.price)
+					State.upgrades[u.key] = true
+					_apply_upgrades()
+					bought.append(u.key)
+		var gc := {}
+		for g in guest_log:
+			gc[g] = gc.get(g, 0) + 1
+		print("SIMDAY %s" % JSON.stringify({
+			"day": day + 1, "fire": State.fire_state, "bait": baits[day % baits.size()],
+			"coins": State.money - coins0, "served": State.dishes_served - served0,
+			"kitchen_pct": kitchen_active * 100 / 480,
+			"starve_pct": (waiting_total * 100 / seated_total) if seated_total > 0 else 0,
+			"empty_pct": empty_scene * 100 / 480,
+			"clicks": clicks, "spawns": guest_log.size(), "guests": gc,
+			"bought": bought, "pantry_left": State.pantry.size(),
+		}))
+	get_tree().quit()
+
 func _run_shot(path: String) -> void:
 	State.add_ingredients("곡물", ["맑음"], 3)
 	kitchen.ready_dishes = 1
 	kitchen.dirty_dishes = 3
-	kitchen.cooking = true
-	kitchen.cook_left = 60.0
+	kitchen.pot_servings = 8  # 솥이 끓는 중 (cooking은 파생 상태)
+	kitchen.dish_left = 60.0
 	State.upgrades = {"lantern": true, "stove": true, "table3": true}
 	_apply_upgrades()
 	for i in 3:
