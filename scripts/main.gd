@@ -261,13 +261,20 @@ func _rebuild_scene() -> void:
 		seat_defs.append({"x": tx + 38.0, "table_idx": i})
 		var ti := i
 		_clickzone(Rect2(tx + 2, 84, 28, 22), func() -> void: _on_table_click(ti))
-	# 역귀
+	# 역귀 — 스테이션을 오가는 AI (keeper.gd)
 	keeper = AnimatedSprite2D.new()
+	keeper.set_script(load("res://scripts/keeper.gd"))
 	keeper.sprite_frames = _char_frames("keeper", ["walk", "cook"])
 	keeper.centered = false
 	keeper.position = Vector2(148, 96)
-	keeper.play("walk")
+	keeper.kitchen = kitchen
 	scene_root.add_child(keeper)
+	var kz := Control.new()  # 클릭존이 역귀를 따라다닌다
+	kz.size = Vector2(28, 30)
+	kz.gui_input.connect(func(ev: InputEvent) -> void:
+		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
+			shop_panel.visible = not shop_panel.visible)
+	keeper.add_child(kz)
 	# 알바생
 	for b in int(st.staff):
 		if not _has_tex("busser_walk_0"):
@@ -282,7 +289,6 @@ func _rebuild_scene() -> void:
 	# 개입 표적 + 클릭 존
 	_setup_targets()
 	_clickzone(Rect2(52, 26, 30, 42), func() -> void: menu_panel.visible = not menu_panel.visible)
-	_clickzone(Rect2(148, 96, 28, 30), func() -> void: shop_panel.visible = not shop_panel.visible)
 
 func _apply_window(w: int, title: String) -> void:
 	if stage_label:
@@ -548,10 +554,6 @@ func _process(delta: float) -> void:
 	ready_dish.visible = kitchen.ready_dishes > 0
 	dish_stack.visible = kitchen.dirty_dishes >= 3
 	prep_crate.visible = not State.pantry.is_empty() and not kitchen.boost_next_prep
-	if kitchen.cooking and keeper.animation != "cook":
-		keeper.play("cook")
-	elif not kitchen.cooking and keeper.animation != "walk":
-		keeper.play("walk")
 	# 알바생이 없으면 역귀가 느리게나마 테이블을 치운다 (무벌)
 	if bussers.is_empty():
 		keeper_clear_left -= delta
